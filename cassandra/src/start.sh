@@ -3,6 +3,9 @@
 # Accept listen_address
 IP=${LISTEN_ADDRESS:-`hostname --ip-address`}
 
+RPC_IP=${RPC_ADDRESS:-`hostname --ip-address`}
+
+
 # Accept seeds via docker run -e SEEDS=seed1,seed2,...
 SEEDS=${SEEDS:-$IP}
 
@@ -23,8 +26,8 @@ CONFIG=/etc/cassandra/conf
 rm -rf $CONFIG && cp -r $DEFAULT $CONFIG
 sed -i -e "s/^listen_address.*/listen_address: $IP/"            $CONFIG/cassandra.yaml
 sed -i -e "s/^rpc_address.*/rpc_address: 0.0.0.0/"              $CONFIG/cassandra.yaml
-sed -i -e "s/# broadcast_address.*/broadcast_address: $IP/"              $CONFIG/cassandra.yaml
-sed -i -e "s/# broadcast_rpc_address.*/broadcast_rpc_address: $IP/"              $CONFIG/cassandra.yaml
+sed -i -e "s/# broadcast_address.*/broadcast_address: $RPC_IP/"              $CONFIG/cassandra.yaml
+sed -i -e "s/# broadcast_rpc_address.*/broadcast_rpc_address: $RPC_IP/"              $CONFIG/cassandra.yaml
 sed -i -e "s/^commitlog_segment_size_in_mb.*/commitlog_segment_size_in_mb: 64/"              $CONFIG/cassandra.yaml
 sed -i -e "s/- seeds: \"127.0.0.1\"/- seeds: \"$SEEDS\"/"       $CONFIG/cassandra.yaml
 sed -i -e "s/# JVM_OPTS=\"\$JVM_OPTS -Djava.rmi.server.hostname=<public name>\"/JVM_OPTS=\"\$JVM_OPTS -Djava.rmi.server.hostname=$IP\"/" $CONFIG/cassandra-env.sh
