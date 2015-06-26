@@ -1,4 +1,4 @@
-Cassandra on Docker
+DEPRECATED!!!!! DO NOT COMMIT HERE!!!! USE https://github.com/Crowdmix/docker-images INSTEAD
 ===================
 
 This is a collection of images and scripts to help you run Cassandra in Docker containers.
